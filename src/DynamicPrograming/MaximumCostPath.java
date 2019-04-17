@@ -1,0 +1,57 @@
+package DynamicPrograming;
+
+import static java.lang.Math.max; 
+  
+class MaximumCostPath  
+{ 
+    public static int N = 4, M = 6; 
+      
+    
+    static int findMaxPath(int mat[][]) 
+    { 
+       
+        int res = -1; 
+        for (int i = 0; i < M; i++) 
+            res = max(res, mat[0][i]); 
+  
+        for (int i = 1; i < N; i++)  
+        { 
+            res = -1; 
+            for (int j = 0; j < M; j++)  
+            { 
+                
+                if (j > 0 && j < M - 1) 
+                    mat[i][j] += max(mat[i - 1][j+1], 
+                                 max(mat[i][j + 1],  
+                                    mat[i + 1][j + 1])); 
+  
+                
+                else if (i < N - 1) 
+                    mat[i][j] += max(mat[i][j+1], 
+                                    mat[i - 1][j + 1]); 
+  
+                
+                else if (i > 0) 
+                    mat[i][j] += max(mat[i][j+1], 
+                                mat[i - 1][j + 1]); 
+  
+              
+                res = max(mat[i][j], res); 
+            } 
+        } 
+        return res; 
+    } 
+      
+   
+    public static void main (String[] args)  
+    { 
+        int mat[][] = { { 10, 10, 2, 0, 20, 4 }, 
+                        { 1, 0, 0, 30, 2, 5 }, 
+                        { 0, 10, 4, 0, 2, 0 }, 
+                        { 1, 0, 2, 20, 0, 4 }  
+                    }; 
+  
+        System.out.println(findMaxPath(mat)); 
+    } 
+} 
+  
